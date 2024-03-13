@@ -1,5 +1,4 @@
 const User = require("../models/user.model");
-const Car = require("../models/car.model.js");
 
 const { ApiError } = require("../utils/ApiError.js");
 const { ApiResponse } = require("../utils/ApiResponse.js");
@@ -7,9 +6,9 @@ const { catchAsyncErrors } = require("../middlewares/catchAsyncErrors.js");
 
 // ?? Admin Register Handler
 exports.registerUser = catchAsyncErrors(async (req, res) => {
-	const { name, email, contact, password, gender, role } = req.body;
+	const { name, contact, gender, role, email, password } = req.body;
 
-	if ([name, email, contact, password, gender].some((field) => field?.trim() === "")) {
+	if ([name, contact, gender, role, email, password].some((field) => field?.trim() === "")) {
 		throw new ApiError(400, "All fields are required");
 	}
 
@@ -23,11 +22,11 @@ exports.registerUser = catchAsyncErrors(async (req, res) => {
 
 	const user = await User.create({
 		name,
-		email,
 		contact,
+		gender,
+		role,
+		email,
 		password,
-		gender: gender.toLowerCase(),
-		role: role || "access",
 	});
 
 	const createdUser = await User.findById(user._id).select("-password");

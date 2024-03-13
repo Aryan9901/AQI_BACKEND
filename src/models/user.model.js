@@ -14,6 +14,7 @@ const userSchema = new Schema(
 		},
 		contact: {
 			type: String,
+			unique: [true, "Contact Number Should be unique"],
 			minLength: [10, "Contact should be atleast 10 character long"],
 			maxLength: [10, "Contact must not be exceed 10 character long"],
 		},
@@ -24,8 +25,8 @@ const userSchema = new Schema(
 		},
 		role: {
 			type: String,
-			enum: ["admin", "owner", "access"],
-			default: "access",
+			enum: ["admin", "user"],
+			default: "user",
 		},
 		email: {
 			type: String,
@@ -45,14 +46,6 @@ const userSchema = new Schema(
 		resetPasswordToken: {
 			type: String,
 			default: "0",
-		},
-
-		avatar: {
-			type: Object,
-			default: {
-				fileId: "",
-				url: "https://cdn.vectorstock.com/i/1000x1000/62/59/default-avatar-photo-placeholder-profile-icon-vector-21666259.webp",
-			},
 		},
 	},
 	{ timestamps: true }
