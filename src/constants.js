@@ -1,1 +1,1 @@
-exports.DB_NAME = "crm";
+exports.DB_NAME = "AQI";
